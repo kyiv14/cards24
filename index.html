@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Кредитные карты</title>
+  <!-- Шрифт Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      border-radius: 24px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+      width: 100%;
+      max-width: 380px;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      box-sizing: border-box;
+      transition: transform 0.3s ease;
+      color: white;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .bank-name {
+      font-size: 2em;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+
+    .card-number {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(2em, 7vw, 3em);
+      font-weight: 700;
+      text-align: center;
+      margin: 25px 0;
+            font-family: 'Titillium Web', sans-serif;
+      letter-spacing: 3px;
+      color: #e6e6e6;
+      text-shadow: none;
+    }
+
+    .copy-button {
+      display: block;
+      margin: 0 auto;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #000;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .copy-button:hover {
+      background-color: #fff;
+      transform: scale(1.05);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 400px) {
+      .card-number {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        font-size: 1.6em;
+      }
+
+      .bank-name {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Мои карты</h2>
+  <div id="cards-container"></div>
+
+  <script>
+    const cards = [
+      { number: "5168752084846610", bank: "Privat24", color: "#003c2f" },
+      { number: "4441111068732621", bank: "monobank", color: "#1e1e1e" },
+      { number: "5355280020632822", bank: "PUMB", color: "#ea1d2c" },
+      { number: "4323357022673483", bank: "àbank24", color: "#00d26a", textColor: "#000" },
+      { number: "5175477412552430", bank: "NovaPay", color: "#7b2ff7" }
+    ];
+
+    const container = document.getElementById("cards-container");
+
+    cards.forEach(({ number, bank, color, textColor }) => {
+      const cardDiv = document.createElement("div");
+      cardDiv.className = "card";
+      cardDiv.style.background = color;
+      if (textColor) cardDiv.style.color = textColor;
+
+      const bankName = document.createElement("div");
+      bankName.className = "bank-name";
+      bankName.textContent = bank;
+
+      const numberP = document.createElement("p");
+      numberP.className = "card-number";
+      numberP.textContent = number;
+
+      const button = document.createElement("button");
+      button.className = "copy-button";
+      button.textContent = "Копировать";
+      button.addEventListener("click", () => {
+        const tempInput = document.createElement("input");
+        document.body.appendChild(tempInput);
+        tempInput.value = number;
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        button.textContent = "Скопировано!";
+        setTimeout(() => button.textContent = "Копировать", 1500);
+      });
+
+      cardDiv.appendChild(bankName);
+      cardDiv.appendChild(numberP);
+      cardDiv.appendChild(button);
+      container.appendChild(cardDiv);
+    });
+  </script>
+
+</body>
+</html>
